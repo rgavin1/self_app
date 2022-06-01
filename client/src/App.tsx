@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Stack, Button, Container, Drawer, Link, TextField, Typography } from '@mui/material';
+import { addUsers } from './services/users';
 
 const App: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,17 +17,12 @@ const App: React.FC = () => {
 
   const handleRegistrationForm = (rawInput: any) => {
     const { value, id } = rawInput.target;
-    console.log(id, ": ", value);
-    setUserForm({ [id]: value })
+    setUserForm({ ...userForm, [id]: value })
   }
 
-  const submitForm = () => {
-    console.log('userForm', userForm)
-  }
+  const submitForm = () => addUsers(userForm);
+  const toggleDrawer = () => setIsOpen(!isOpen);
 
-  const toggleDrawer = () => {
-    setIsOpen(!isOpen)
-  }
   return (
     <Container className="app">
       <Stack

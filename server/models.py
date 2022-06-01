@@ -10,12 +10,25 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
-    first_name = Column(String)
-    last_name = Column(String)
-    age = Column(Integer)
-    weight = Column(Integer)
-    height = Column(Integer)
-
+    username = Column(String, nullable=False)
+    password = Column(String, nullable=False)
+    email = Column(String, nullable=False)
+    phone = Column(String, nullable=False)
+    dob = Column(String, nullable=False)
+    gender = Column(String, nullable=False)
+    age = Column(String, nullable=False)
+    unit_of_measure = Column(String, nullable=False)
+    weight = Column(String, nullable=False)
+    height = Column(String, nullable=False)
+    fitness_goal = Column(String, nullable=False)
+    logged_in = Column(TIMESTAMP(timezone=True),
+                        nullable=False, server_default=text('now()'))
+    logged_out = Column(TIMESTAMP(timezone=True),
+                        nullable=True, server_default=text('now()'))
+    created_at = Column(TIMESTAMP(timezone=True),
+                        nullable=False, server_default=text('now()'))
+    modified_at = Column(TIMESTAMP(timezone=True),
+                        nullable=True, server_default=text('now()'))
 
 class Exercise(Base):
     __tablename__ = "exercises"

@@ -29,12 +29,11 @@ class WorkoutCreate(WorkoutBase):
 
 
 class UserBase(BaseModel):
-    first_name: str
-    last_name: str
-    age: int
-    weight: int
-    height: int
-
+    username: str
+    password: str
+    email: str
+    phone: str
+    dob: str
 
 class UserCreate(UserBase):
     pass
