@@ -37,3 +37,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     pass
+
+class AuthBase(BaseModel):
+    username: str
+    password: str

@@ -1,5 +1,6 @@
 
 from uuid import uuid4
+from sqlalchemy_utils import EmailType
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy import TIMESTAMP, Boolean, Column, ForeignKey, Integer, String, text
 from datetime import datetime
@@ -10,25 +11,21 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
-    username = Column(String, nullable=False)
+    username = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
-    email = Column(String, nullable=False)
+    email = Column(EmailType, unique=True, nullable=False)
     phone = Column(String, nullable=False)
     dob = Column(String, nullable=False)
-    gender = Column(String, nullable=False)
-    age = Column(String, nullable=False)
-    unit_of_measure = Column(String, nullable=False)
-    weight = Column(String, nullable=False)
-    height = Column(String, nullable=False)
-    fitness_goal = Column(String, nullable=False)
-    logged_in = Column(TIMESTAMP(timezone=True),
-                        nullable=False, server_default=text('now()'))
-    logged_out = Column(TIMESTAMP(timezone=True),
-                        nullable=True, server_default=text('now()'))
+    sex = Column(String, nullable=True, default=None)
+    unit_of_measure = Column(String, nullable=True, default=None)
+    weight = Column(String, nullable=True, default=None)
+    height = Column(String, nullable=True, default=None)
+    fitness_goal = Column(String, nullable=True, default=None)
+    logged_in = Column(TIMESTAMP(timezone=True), nullable=True, default=None)
+    logged_out = Column(TIMESTAMP(timezone=True), nullable=True, default=None)
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
-    modified_at = Column(TIMESTAMP(timezone=True),
-                        nullable=True, server_default=text('now()'))
+    modified_at = Column(TIMESTAMP(timezone=True), nullable=True, default=None)
 
 class Exercise(Base):
     __tablename__ = "exercises"
