@@ -1,9 +1,9 @@
-export type User = {
+export type Credentials = {
     username: string;
     password: string;
 }
 
-export type Login = {
-    user: User;
-    login: (user1: User) => void;
+export type AuthorizationHook = {
+    isLoggedIn: boolean;
+    login: (creds: Credentials) => void;
 }

@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from os import access
+from typing import Optional
+from pydantic import BaseModel, EmailStr
 
 
 class ExerciseBase(BaseModel):
@@ -31,7 +33,7 @@ class WorkoutCreate(WorkoutBase):
 class UserBase(BaseModel):
     username: str
     password: str
-    email: str
+    email: EmailStr
     phone: str
     dob: str
 
@@ -41,3 +43,10 @@ class UserCreate(UserBase):
 class AuthBase(BaseModel):
     username: str
     password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    id: Optional[str] = None

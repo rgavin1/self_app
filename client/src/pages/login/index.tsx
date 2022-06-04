@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Stack, Container, Button, Drawer, Link, TextField, Typography } from '@mui/material';
-import { addUsers } from '../../services/users';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
 
@@ -10,25 +9,24 @@ const Login: React.FC = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [isRegistered, setIsRegistered] = useState(false);
-    const [userForm, setUserForm] = useState<any>();
+    const [creds, setCreds] = useState<any>();
 
     const toggleRegistrationForm = () => {
-        if (!isOpen) {
-            setIsOpen(true);
-            setIsRegistered(!isRegistered);
-        }
+        if (isOpen) setIsRegistered(!isRegistered);
+        setIsOpen(true);
         setIsRegistered(!isRegistered);
     }
 
     const handleRegistrationForm = (rawInput: any) => {
         const { value, id } = rawInput.target;
-        setUserForm({ ...userForm, [id]: value })
+        setCreds({ ...creds, [id]: value })
     }
 
     const submitForm = () => {
-        addUsers(userForm);
-        console.log(auth);
-        navigate("/");
+        if (!creds) return;
+        auth?.login(creds)
+
+        if (auth?.isLoggedIn) navigate("/");
     };
     const toggleDrawer = () => setIsOpen(!isOpen);
 

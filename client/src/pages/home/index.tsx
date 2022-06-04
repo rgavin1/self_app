@@ -1,11 +1,36 @@
 import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import FitnessCenterOutlinedIcon from '@mui/icons-material/FitnessCenterOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Paper from '@mui/material/Paper';
+import Avatar from '@mui/material/Avatar';
+
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+const BasicCard = () => {
+    return (
+        <Box>
+            <Grid container spacing={12}>
+                <Grid item xs={8}>
+                    <Typography variant="h5" color="text.secondary" gutterBottom>
+                        Hello
+                    </Typography>
+                    <Typography variant="h6" color="text.secondary">
+                        Ramsey Gavin
+                    </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                    <Avatar alt="Ramsey Gavin" src='https://avatars.githubusercontent.com/u/44215916?s=96&v=4' sx={{ width: 56, height: 56 }} />
+                </Grid>
+            </Grid>
+        </Box>
+    );
+}
+
 
 export default function Home() {
     const [value, setValue] = React.useState('recents');
@@ -15,25 +40,27 @@ export default function Home() {
     };
 
     return (
+        <>
+            <BasicCard />
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-            <BottomNavigation sx={{ width: 500 }} value={value} onChange={handleChange}>
+                <BottomNavigation value={value} onChange={handleChange}>
                 <BottomNavigationAction
-                    label="Recents"
-                    value="recents"
-                    icon={<RestoreIcon />}
+                        label="HOME"
+                        value="home"
+                        icon={<HomeOutlinedIcon />}
                 />
                 <BottomNavigationAction
-                    label="Favorites"
-                    value="favorites"
-                    icon={<FavoriteIcon />}
+                        label="EXERCISES"
+                        value="exercises"
+                        icon={<FitnessCenterOutlinedIcon />}
                 />
                 <BottomNavigationAction
-                    label="Nearby"
-                    value="nearby"
-                    icon={<LocationOnIcon />}
-                />
-                <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+                        label="SETTINGS"
+                        value="settings"
+                        icon={<SettingsOutlinedIcon />}
+                    />
             </BottomNavigation>
         </Paper>
+        </>
     );
 }

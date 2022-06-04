@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export const getUsers = async () => {
     try {
@@ -8,12 +8,3 @@ export const getUsers = async () => {
         console.log('err', err)
     }
 }
-
-export const addUsers = async (user: any) => {
-    try {
-        await axios.post("http://localhost:8000/users", user)
-    } catch (err) {
-        console.log('err', err)
-    }
-}
-
