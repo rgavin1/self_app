@@ -4,11 +4,13 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import FitnessCenterOutlinedIcon from '@mui/icons-material/FitnessCenterOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const BasicCard = () => {
     return (
@@ -30,6 +32,19 @@ const BasicCard = () => {
     );
 }
 
+const CircularColor = () => {
+    return (
+        <div style={{
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+        }}>
+            <CircularProgress color="secondary" />
+        </div>
+    );
+}
+
 
 export default function Home() {
     const [value, setValue] = React.useState('recents');
@@ -38,7 +53,10 @@ export default function Home() {
         setValue(newValue);
     };
 
-    return (    
+    const gettingUser = { user: true }
+
+    return (   
+        <>{gettingUser.user ? <CircularColor /> :
         <>
             <BasicCard />
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
@@ -49,6 +67,11 @@ export default function Home() {
                         icon={<HomeOutlinedIcon />}
                 />
                 <BottomNavigationAction
+                            label="WORKOUTS"
+                            value="workouts"
+                            icon={<ListAltIcon />}
+                        />
+                        <BottomNavigationAction
                         label="EXERCISES"
                         value="exercises"
                         icon={<FitnessCenterOutlinedIcon />}
@@ -60,6 +83,6 @@ export default function Home() {
                     />
             </BottomNavigation>
         </Paper>
-        </>
+            </>}</>
     );
 }

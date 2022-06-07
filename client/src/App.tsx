@@ -1,27 +1,24 @@
-import React from 'react';
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { Routes, Route } from "react-router-dom";
 import { Container } from '@mui/material';
-import { Home, Login, NotFound } from './pages';
-import { AuthProvider, useAuth } from './hooks/auth';
-
-const ProtectedPath = ({ children }: any) => {
-  const auth = useAuth();
-  if (!auth?.hasCreds) return <Navigate to="/login" />;
-  return children;
-}
+import { Home, Login, NotFound, Onboarding } from './pages';
+import { AuthProvider } from './hooks/auth';
+import ProtectedRoutes from './utils/protectedRoutes/ProtectedRoutes';
 
 const App: React.FC = () => {
+  const [creds, setCreds] = useState<any>();
+  const [token, setToken] = useState("")
+
   return (
     <AuthProvider>
       <Container className="app">
         <Routes>
-          <Route path="login" element={<Login />} />
-          <Route path="/" element={
-            <ProtectedPath>
-              <Home />
-            </ProtectedPath>
-          } />
+          <Route path="login" element={<Login {...{ creds, setCreds, setToken }} />} />
           <Route path="*" element={<NotFound />} />
+          <Route element={<ProtectedRoutes {...{ token }} />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/onboarding" element={<Onboarding />} />
+          </Route>
         </Routes>
       </Container>
     </AuthProvider>

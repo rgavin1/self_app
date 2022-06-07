@@ -4,8 +4,5 @@ export type Credentials = {
 }
 
 export type AuthorizationHook = {
-    isLoading: boolean;
-    hasCreds: boolean;
-    hasError: boolean;
-    login: (creds: Credentials) => void;
+    login: (creds: Credentials) => Promise<string>;
 }

@@ -14,7 +14,9 @@ const Container: React.FC<{ toggleDrawer: () => void; toggleRegistrationForm: ()
                 <Typography align="center" variant='body1'>Shape your body</Typography>
             </div>
             <div id="login" style={{ width: "100%" }}>
-                <Button fullWidth size="large" variant="contained" color="secondary" onClick={toggleDrawer}>Login</Button>
+                <Button fullWidth size="large" variant="contained" color="secondary" onClick={toggleDrawer}>
+                    Login
+                </Button>
                 <p style={{ textAlign: "center" }}>Don't have an account? <Link href="#" onClick={toggleRegistrationForm}>Sign up</Link></p>
             </div>
         </Stack>
