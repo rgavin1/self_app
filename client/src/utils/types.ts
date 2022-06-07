@@ -4,6 +4,8 @@ export type Credentials = {
 }
 
 export type AuthorizationHook = {
-    isLoggedIn: boolean;
+    isLoading: boolean;
+    hasCreds: boolean;
+    hasError: boolean;
     login: (creds: Credentials) => void;
 }

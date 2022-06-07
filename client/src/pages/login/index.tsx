@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Stack, Container, Button, Drawer, Link, TextField, Typography } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth";
+import { Login as LoginSection } from '../../components/index';
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -26,25 +27,13 @@ const Login: React.FC = () => {
         if (!creds) return;
         auth?.login(creds)
 
-        if (auth?.isLoggedIn) navigate("/");
+        if (auth?.hasError) navigate("/");
     };
     const toggleDrawer = () => setIsOpen(!isOpen);
 
     return (
-        <>
-            <Stack
-                direction="column"
-                justifyContent="end"
-                alignItems="center"
-                style={{ minHeight: "100vh" }}
-            >
-                {isOpen ?
-                    <h1>Logged In</h1> :
-                    <h1>Logged Out</h1>
-                }
-                <Button fullWidth size="large" variant="contained" onClick={toggleDrawer}>Login</Button>
-                <p>Don't have an account? <Link href="#" onClick={toggleRegistrationForm}>Sign up</Link></p>
-            </Stack>
+        <div>
+            <LoginSection toggleDrawer={toggleDrawer} toggleRegistrationForm={toggleRegistrationForm} />
             {
                 <React.Fragment key={"bottom"}>
                     <Drawer
@@ -78,14 +67,14 @@ const Login: React.FC = () => {
                                 <TextField onChange={(e) => handleRegistrationForm(e)} margin="dense" fullWidth id="dob" label="Date of Birth" variant="outlined" />
                             </div>}
                             <TextField onChange={(e) => handleRegistrationForm(e)} margin="normal" fullWidth id="password" label="Password" variant="outlined" />
-                            {!isRegistered ? <Button style={{ marginTop: "1.25em", marginBottom: "1.5em" }} fullWidth size="large" variant="contained" onClick={submitForm}>Login</Button> :
+                            {!isRegistered ? <Button style={{ marginTop: "1.25em", marginBottom: "1.5em" }} fullWidth size="large" variant="contained" color="secondary" onClick={submitForm}>Login</Button> :
                                 <Button style={{ marginTop: "1.25em", marginBottom: "1.5em" }} fullWidth size="large" variant="contained" onClick={submitForm}>Sign Up</Button>}
                             <Link display="block" textAlign="center" href="#" style={{ marginBottom: !isRegistered ? "0em" : "1.75em" }}>Forgot your password?</Link>
                             {!isRegistered && <p style={{ display: "block", textAlign: "center", marginTop: "1.25em", marginBottom: "2em" }}>Don't have an account? <Link href="#" onClick={toggleRegistrationForm} >Sign up</Link></p>}
                         </Container>
                     </Drawer>
                 </React.Fragment>
-            }</>
+            }</div>
     )
 }
 

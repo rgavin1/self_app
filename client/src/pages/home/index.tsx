@@ -6,7 +6,6 @@ import FitnessCenterOutlinedIcon from '@mui/icons-material/FitnessCenterOutlined
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
-
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -39,7 +38,7 @@ export default function Home() {
         setValue(newValue);
     };
 
-    return (
+    return (    
         <>
             <BasicCard />
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
