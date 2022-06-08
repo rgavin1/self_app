@@ -1,16 +1,10 @@
 import * as React from 'react';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import FitnessCenterOutlinedIcon from '@mui/icons-material/FitnessCenterOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Navbar } from '../../components/index'
 
 const BasicCard = () => {
     return (
@@ -53,36 +47,13 @@ export default function Home() {
         setValue(newValue);
     };
 
-    const gettingUser = { user: true }
+    const gettingUser = { user: false }
 
     return (   
         <>{gettingUser.user ? <CircularColor /> :
         <>
-            <BasicCard />
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-                <BottomNavigation value={value} onChange={handleChange}>
-                <BottomNavigationAction
-                        label="HOME"
-                        value="home"
-                        icon={<HomeOutlinedIcon />}
-                />
-                <BottomNavigationAction
-                            label="WORKOUTS"
-                            value="workouts"
-                            icon={<ListAltIcon />}
-                        />
-                        <BottomNavigationAction
-                        label="EXERCISES"
-                        value="exercises"
-                        icon={<FitnessCenterOutlinedIcon />}
-                />
-                <BottomNavigationAction
-                        label="SETTINGS"
-                        value="settings"
-                        icon={<SettingsOutlinedIcon />}
-                    />
-            </BottomNavigation>
-        </Paper>
+                <BasicCard />
+                <Navbar {...{ value, handleChange }} />
             </>}</>
     );
 }
