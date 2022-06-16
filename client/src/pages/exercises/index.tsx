@@ -24,6 +24,7 @@ const AlignItemsList = () => {
                         borderRadius: '15px'
                     }}>
                         <ListItemText
+                            key={i}
                             primary={
                                 <>
                                     <Typography

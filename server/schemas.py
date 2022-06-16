@@ -3,7 +3,17 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr
 
 
-class ExerciseBase(BaseModel):
+class ExerciseLogBase(BaseModel):
+    note: str
+    sets: int
+    reps: int
+    weight: int
+    volume: int
+    intensity: int
+    equipment: str
+class ExerciseLogCreate(ExerciseLogBase):
+    pass
+class ExerciseListBase(BaseModel):
     muscle_group: str
     name: str
     fitness_level: str
@@ -12,12 +22,7 @@ class ExerciseBase(BaseModel):
     modality: str
     joint: str
 
-
-class ExerciseCreate(ExerciseBase):
-    pass
-
-
-class WorkoutBase(BaseModel):
+class WorkoutLogBase(BaseModel):
     title: str
     sets: int
     intensity: int
@@ -26,18 +31,27 @@ class WorkoutBase(BaseModel):
     reps: int
 
 
-class WorkoutCreate(WorkoutBase):
+class WorkoutCreate(WorkoutLogBase):
     pass
-
-
-class UserBase(BaseModel):
+class UserProfileBase(BaseModel):
+    name: str
+    sex: str
+    unit_of_measure: str
+    weight: int
+    height: int
+    fitness_goal: str
+    image: str
+    user_account_id_fk: str
+class UserProfileCreate(UserProfileBase):
+    pass
+class UserAccountBase(BaseModel):
     username: str
     password: str
     email: EmailStr
     phone: str
     dob: str
 
-class UserCreate(UserBase):
+class UserAccountCreate(UserAccountBase):
     pass
 
 class AuthBase(BaseModel):

@@ -16,7 +16,7 @@ def get_workouts(db: Session = Depends(get_db)):
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-def create_workout(workout: schemas.WorkoutBase, db: Session = Depends(get_db)):
+def create_workout(workout: schemas.WorkoutLogBase, db: Session = Depends(get_db)):
     db.add(models.Workout(**workout.dict()))
     db.commit()
     return {"status": "success"}

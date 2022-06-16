@@ -1,9 +1,8 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import React, { useEffect } from 'react'
+import { Navigate } from 'react-router-dom';
+import { Avatar, Grid, Typography, Box, CircularProgress } from '@mui/material';
+
+import useUser from '../../hooks/user'
 import { Navbar } from '../../components/index'
 
 const BasicCard = () => {
@@ -40,20 +39,33 @@ const CircularColor = () => {
 }
 
 
-export default function Home() {
+const Home: React.FC<{ token: string }> = ({ token }) => {
     const [value, setValue] = React.useState('recents');
+    const [loading, setLoading] = React.useState(false);
+
+    useEffect(() => {
+        (async () => {
+            setLoading(true);
+            try {
+
+            } catch {
+
+            }
+            setLoading(false);
+        })()
+    }, [])
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
 
-    const gettingUser = { user: false }
-
     return (   
-        <>{gettingUser.user ? <CircularColor /> :
+        <>{loading ? <CircularColor /> :
         <>
                 <BasicCard />
                 <Navbar {...{ value, handleChange }} />
             </>}</>
     );
 }
+
+export default Home

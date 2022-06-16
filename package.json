@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@mui/lab": "^5.0.0-alpha.84"
+    "@mui/lab": "^5.0.0-alpha.84",
+    "@mui/x-date-pickers": "^5.0.0-alpha.5"
   }
 }

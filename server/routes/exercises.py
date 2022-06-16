@@ -15,9 +15,13 @@ def get_exercises(db: Session = Depends(get_db)):
     exercises = db.query(models.Exercise).all()
     return {"data": exercises}
 
+@router.get("/list")
+def get_list(db: Session = Depends(get_db)):
+    list = [{"name": "Test", "sets": "1"}]
+    return list
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
-def create_exercise(exercise: schemas.ExerciseBase, db: Session = Depends(get_db)):
+@router.post("/log", status_code=status.HTTP_201_CREATED)
+def create_exercise(exercise: schemas.ExerciseListBase, db: Session = Depends(get_db)):
     db.add(models.Exercise(**exercise.dict()))
     db.commit()
     return {"status": "success"}

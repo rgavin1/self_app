@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../hooks/auth";
+import qs from 'qs';
+
+import { axiosInstance } from '../../services/axios'
 import { Login as LoginSection, Drawer } from '../../components/index';
 
-const Login: React.FC<{ creds: any, setCreds: (t: any) => void; setToken: (t: any) => void; }> = ({ creds, setCreds, setToken }) => {
-    const auth = useAuth();
+const Login: React.FC<{ setToken: Dispatch<SetStateAction<string>> }> = ({ setToken }) => {
     let navigate = useNavigate();
 
+    const [creds, setCreds] = useState<any>();
     const [isOpen, setIsOpen] = useState(false);
     const [isRegistered, setIsRegistered] = useState(false);
 
@@ -16,17 +18,22 @@ const Login: React.FC<{ creds: any, setCreds: (t: any) => void; setToken: (t: an
         setIsRegistered(!isRegistered);
     }
 
-    const handleRegistrationForm = (rawInput: any) => {
-        const { value, id } = rawInput.target;
+    const handleRegistrationForm = (credentials: any) => {
+        const { value, id } = credentials.target;
         setCreds({ ...creds, [id]: value })
     }
 
     const submitForm = async () => {
-        const token = await auth?.login(creds);
-        if (!token) return;
-        setToken(token)
-        navigate("/");
+        const { username, password } = creds;
+        try {
+            const response = await axiosInstance.post("auth", qs.stringify({ username, password }));
+            setToken(response.data.access_token);
+            navigate("/");
+        } catch (err) {
+            console.log('err', err)
+        }
     };
+
     const toggleDrawer = () => setIsOpen(!isOpen);
 
     return (

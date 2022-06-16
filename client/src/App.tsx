@@ -6,17 +6,16 @@ import { AuthProvider } from './hooks/auth';
 import ProtectedRoutes from './utils/protectedRoutes/ProtectedRoutes';
 
 const App: React.FC = () => {
-  const [creds, setCreds] = useState<any>();
   const [token, setToken] = useState("")
 
   return (
     <AuthProvider>
       <Container className="app">
         <Routes>
-          <Route path="login" element={<Login {...{ creds, setCreds, setToken }} />} />
+          <Route path="login" element={<Login {...{ setToken }} />} />
           <Route path="*" element={<NotFound />} />
           <Route element={<ProtectedRoutes {...{ token }} />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home {...{ token }} />} />
             <Route path="/exercises" element={<Exercises />} />
             <Route path="/workouts" element={<Workouts />} />
             <Route path="/onboarding" element={<Onboarding />} />

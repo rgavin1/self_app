@@ -1,8 +1,11 @@
+import { SetStateAction, Dispatch } from 'react'
+
 export type Credentials = {
     username: string;
     password: string;
 }
 
 export type AuthorizationHook = {
-    login: (creds: Credentials) => Promise<string>;
+    auth: any;
+    setAuth: Dispatch<SetStateAction<any>>;
 }

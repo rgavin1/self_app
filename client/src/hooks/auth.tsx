@@ -1,20 +1,14 @@
-import { useState, useContext, createContext } from 'react';
-import { getAccessToken } from '../services/authorization';
-import { Credentials, AuthorizationHook } from '../utils/types';
+import { useContext, createContext, useState } from 'react';
+import { AuthorizationHook } from '../utils/types';
 
 
 
 const AuthContext = createContext<AuthorizationHook | null>(null);
 
 export const AuthProvider = ({ children }: any) => {
-    const login = async (creds: Credentials): Promise<string> => {
-        const access_token = await getAccessToken(creds);
-        return access_token;
-    }
+    const [auth, setAuth] = useState<AuthorizationHook | null>(null)
 
-    // const logout = () => setUser();
-
-    return (<AuthContext.Provider value={{ login }}> {children} </AuthContext.Provider>)
+    return (<AuthContext.Provider value={{ auth, setAuth }}> {children} </AuthContext.Provider>)
 }
 
 export const useAuth = () => {
