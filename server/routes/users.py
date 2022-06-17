@@ -26,7 +26,7 @@ def get_users(id: str, db: Session = Depends(get_db)):
 
 # User's Profile
 @router.get("/profile/{id}")
-def get_profile(id: str, db: Session = Depends(get_db), user_id = Depends(oauth2.get_current_user)):
+def get_profile(id: str, db: Session = Depends(get_db)):
     user = db.query(models.UserProfile).filter(models.UserProfile.user_account_id_fk == id).first()
 
     if not user:

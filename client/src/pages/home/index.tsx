@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
-import { Navigate } from 'react-router-dom';
-import { Avatar, Grid, Typography, Box, CircularProgress } from '@mui/material';
-
-import useUser from '../../hooks/user'
+import React from 'react'
+import { Avatar, Grid, Typography, Box, CircularProgress, CardContent, Chip, Card } from '@mui/material';
 import { Navbar } from '../../components/index'
+import useUser from '../../hooks/user';
+import { UserProfile } from '../../utils/types';
+import { axiosInstance } from '../../services/axios';
 
-const BasicCard = () => {
+const BasicCard: React.FC<{ user?: UserProfile }> = ({ user }) => {
     return (
         <Box>
             <Grid container spacing={12}>
@@ -14,11 +14,11 @@ const BasicCard = () => {
                         Hello
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
-                        Ramsey Gavin
+                        {user?.name}
                     </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                    <Avatar alt="Ramsey Gavin" src='https://avatars.githubusercontent.com/u/44215916?s=96&v=4' sx={{ width: 56, height: 56 }} />
+                    <Avatar alt={`${user?.name}`} src={`${user?.image}`} sx={{ width: 56, height: 56 }} />
                 </Grid>
             </Grid>
         </Box>
@@ -38,33 +38,81 @@ const CircularColor = () => {
     );
 }
 
+export type WorkoutLog = {
+    description: string;
+    difficulty: string;
+    end: string;
+    id: string;
+    name: string;
+    note: string;
+    start: string;
+    total_reps: number;
+    total_sets: number;
+    total_weight: number;
+    user_profile_id_fk: string;
+    volume: number;
+}
+
+const WorkoutFeed = () => {
+    const [workouts, setWorkouts] = React.useState<WorkoutLog[]>([]);
+
+    React.useEffect(() => {
+        (async () => {
+            try {
+                const { data } = await axiosInstance.get("/workouts/logs/6b00f37c-9833-457e-9f03-c82c8040f504");
+                setWorkouts(data);
+            } catch (e) {
+                console.log('error: ', e)
+            }
+        })()
+    }, []);
+
+    return (
+        <Grid container direction="column" spacing={2}>
+            {workouts.map((workout) => {
+                return <Grid item>
+                    <Card variant="outlined" style={{
+                        background: "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwicKFrzNnKgdQVR9prhFixBBKibmIdgrBIiC16dsAS7LZ3u2g9aGDDQIZGCrhn_zxsGI&usqp=CAU)", backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover"
+                    }}>
+                        <CardContent>
+                            <Typography gutterBottom variant="h4" component="div">
+                                {workout.name}
+                            </Typography>
+                            <Chip color="secondary" size="medium" label={`${workout.difficulty} Difficulty`} />
+                            <Typography variant="body2">
+                                Number of Exercises
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            })}
+        </Grid>
+    )
+}
+
 
 const Home: React.FC<{ token: string }> = ({ token }) => {
+    const { user, isLoading } = useUser();
+
     const [value, setValue] = React.useState('recents');
-    const [loading, setLoading] = React.useState(false);
-
-    useEffect(() => {
-        (async () => {
-            setLoading(true);
-            try {
-
-            } catch {
-
-            }
-            setLoading(false);
-        })()
-    }, [])
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
 
     return (   
-        <>{loading ? <CircularColor /> :
         <>
-                <BasicCard />
+            {isLoading ? <CircularColor /> :
+                <>
+                    <BasicCard user={user} />
+                    <h1>Fitness Challenge Component</h1>
+                    <WorkoutFeed />
                 <Navbar {...{ value, handleChange }} />
-            </>}</>
+                </>
+            }
+        </>
     );
 }
 
