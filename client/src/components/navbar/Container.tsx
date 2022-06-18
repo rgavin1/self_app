@@ -10,7 +10,10 @@ import { Link } from "react-router-dom";
 
 const Container: React.FC<{ value: any; handleChange: (event: React.SyntheticEvent, newValue: string) => void; }> = ({ value, handleChange }) => {
     return (
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+        <Paper sx={{
+            position: 'fixed', bottom: '29px', left: '50%', transform: "translate(-50%)", width: "86%", padding: "15px",
+            borderRadius: "15px"
+        }} elevation={3}>
             <BottomNavigation value={value} onChange={handleChange}>
                 <Link to="/">
                     <BottomNavigationAction

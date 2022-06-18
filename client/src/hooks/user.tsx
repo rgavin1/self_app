@@ -19,7 +19,6 @@ const useUser = () => {
                     unitOfMeasure: user.unit_of_measure,
                     userAccountId: user.user_account_id_fk,
                 }
-                console.log("Response from GET USER PROFILE: ", userProfile);
                 setUser(userProfile);
             } catch (e) {
                 console.log('error', e);
